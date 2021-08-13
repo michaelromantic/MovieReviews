@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Movies.Models;
+using Movies.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace Movies.Controllers
 {
@@ -15,27 +21,27 @@ namespace Movies.Controllers
 
         private void DropList()
         {
-            var categories = movieRepo.PopulateCategoryList();
-            ViewBag.Category = new SelectList(categories, "Id", "Name");
+            var genre = movieRepo.PopulateGenreList();
+            ViewBag.Genre = new SelectList(genre, "Id", "Name");
         }
 
         public ViewResult Index()
         {
-            var contentList = movieRepo.GetAll();
-            return View(contentList);
+            var movieList = movieRepo.GetAll();
+            return View(movieList);
         }
 
         public ViewResult Details(int id)
         {
-            var content = movieRepo.GetById(id);
-            return View(content);
+            var movie = movieRepo.GetById(id);
+            return View(movie);
         }
 
         public ViewResult Create(int id)
         {
             DropList();
 
-            return View(new Movie() { CategoryId = id, ReleaseYear = DateTime.Now.ToString("dddd, MMMM dd yyyy hh:mm tt") });
+            return View(new Movie() {GenreId = id, ReleaseYear = DateTime.Now.ToString("dddd, MMMM dd yyyy hh:mm tt") });
         }
 
         [HttpPost]
@@ -48,11 +54,11 @@ namespace Movies.Controllers
             return RedirectToAction("Details", "Movie", new { id = model.Id });
         }
 
-        public ViewResult CreateByCategoryId(int categoryid)
+        public ViewResult CreateByGenreId(int genreid)
         {
             DropList();
 
-            return View(new Movie() { CategoryId = categoryid });
+            return View(new Movie() { GenreId = genreid });
         }
 
 
@@ -60,8 +66,8 @@ namespace Movies.Controllers
         {
             DropList();
 
-            var content = movieRepo.GetById(id);
-            return View(content);
+            var movie = movieRepo.GetById(id);
+            return View(movie);
         }
 
         [HttpPost]
@@ -78,15 +84,15 @@ namespace Movies.Controllers
 
         //public ViewResult Delete(int id)
         //{
-        //    var content = contentRepo.GetById(id);
-        //    contentRepo.Delete(content);
-        //    return View(content);
+        //    var movie = movieRepo.GetById(id);
+        //    movieRepo.Delete(movie);
+        //    return View(movie);
         //}
 
         public ActionResult Delete(int id)
         {
-            var content = movieRepo.GetById(id);
-            movieRepo.Delete(content);
+            var movie = movieRepo.GetById(id);
+            movieRepo.Delete(movie);
             return RedirectToAction("Index", "Movie");
         }
     }
