@@ -67,10 +67,10 @@ namespace Movies.Controllers
         }
 
         [HttpPost]
-        public ViewResult CreateByMovieId(Review model)
+        public ActionResult CreateByMovieId(Review model)
         {
-            var movie = reviewRepo.PopulateMovieList();
-            ViewBag.Movie = new SelectList(movie, "Id", "Title");
+            //var movie = reviewRepo.PopulateMovieList();
+            //ViewBag.Movie = new SelectList(movie, "Id", "Title");
 
             int[] Ratings = { 1, 2, 3, 4, 5 };
             ViewBag.Ratings = new SelectList(Ratings);
@@ -79,7 +79,7 @@ namespace Movies.Controllers
             model.AddReviews();
             reviewRepo.Create(model);
             ViewBag.Result = "Thanks for your review!";
-            return View(model);
+            return RedirectToAction("Details", "Movie", new { id = model.MovieId });
         }
 
 
@@ -88,7 +88,7 @@ namespace Movies.Controllers
             var review = reviewRepo.GetById(id);
             review.DeleteReview();
             reviewRepo.Delete(review);
-            return RedirectToAction("Detail", "Movie", new { id = review.MovieId });
+            return RedirectToAction("Details", "Movie", new { id = review.MovieId });
         }
 
 
@@ -108,7 +108,7 @@ namespace Movies.Controllers
         }
 
         [HttpPost]
-        public ViewResult Update(Review model)
+        public ActionResult Update(Review model)
         {
 
             var movie = reviewRepo.PopulateMovieList();
@@ -120,7 +120,7 @@ namespace Movies.Controllers
 
             reviewRepo.Update(model);
             ViewBag.Result = "You have successfuly upodated this review";
-            return View(model);
+            return RedirectToAction("Details", "Movie", new { id = model.MovieId });
         }
     }
 }

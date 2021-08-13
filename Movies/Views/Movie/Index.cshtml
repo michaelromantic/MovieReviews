@@ -21,34 +21,32 @@
     <script src="~/js/site.js"></script>
 </head>
 
-<body>
-    <header>
-        <nav>
-            <ul class="nav_links">
-                <li><a href="/Content/Index">HOME</a></li>
-                <li><a href="/Content/Create/">ADD MOVIE</a></li>
-            </ul>
-        </nav>
-    </header>
+    <body>
+        <header>
+            <nav>
+                <ul class="nav_links">
+                    <li><a href="/Movie/Index">HOME</a></li>
+                    <li><a href="/Movie/Create/">ADD MOVIE</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <div id="topPage">
-        <img id="" />
-        <h1>MOVIE REVIEWS</h1>
-    </div>
-
-    <div id="middlePage">
-        <h3>MOVIE REVIEWS</h3>
-        <div id="movies">
-            @*test*@
-            @foreach (var Movie in Model)
-            {
-                <div id="movieBox">
-                    <a id="movie" href="/Content/Details/@Movie.Id"><img src="@Movie.Image" /></a>
-                    <p>Directed By: @Movie.Director</p>
-                </div>
-            } 
+        <div id="topPage">
+            <img id="" />
+            <h1>MOVIE REVIEWS</h1>
         </div>
-    </div>
 
-</body>
+        <div id="middlePage">
+            <h3>MOVIE REVIEWS</h3>
+            <div id="movies">
+                @foreach (var Movie in Model)
+                {
+                    <div id="movieBox">
+                        <h4>@Movie.Title</h4>
+                        <a id="movie" href="/Movie/Details/@Movie.Id"><img src="@Movie.Image" height="550"/></a>
+                    </div>
+                } 
+            </div>
+        </div>
+    </body>
 </html>
