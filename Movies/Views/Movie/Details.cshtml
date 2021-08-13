@@ -1,0 +1,94 @@
+﻿@model Movies.Models.Movie
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+        <link rel="stylesheet" href="/style/DetailStyle.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="nav_links">
+                    <li><a href="/Movie/Index/">HOME</a></li>
+                    <li><a href="/Movie/Create/">ADD MOVIE</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="topPage2">
+        </div>
+
+        <div id="middlePage2">
+            <article id="movieBox">
+                <img src="@Model.Image" width="450"/>
+                <h3>@Model.Title</h3>
+                <p>Director: @Model.Director</p>
+                <p>Written By: @Model.Writer</p>
+                <p>Description: @Model.Description</p>
+                <p>Release: @Model.ReleaseYear</p>
+                <p>Genre: @Model.Genre.Name</p>
+
+                <p id="averageRating"></p>
+
+                <script>
+                    var totalRatings = 0;
+                    var totalReviews = 0;
+                </script>
+                @foreach (var review in Model.Review)
+                {
+                    <script>
+                        totalRatings += @review.Rating;
+                        totalReviews++;
+                    </script>
+                }
+                <script>
+                    var average = totalRatings / totalReviews;
+                    function updateAverageRating() {
+                        let p = document.getElementById('averageRating');
+                        let newText = "Average Rating: " + average;
+                        p.innerText = newText;
+                        }
+                    updateAverageRating();
+                </script>
+
+                <a href="/Movie/Update/@Model.Id">Edit</a>
+                <a href="/Movie/Delete/@Model.Id" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+            </article>
+        </div>
+
+        <br />
+        <hr />
+        <h3>Reviews</h3>
+        <div id="ReviewContainer">
+            @foreach (var review in Model.Review)
+            {
+                <article class="reviewBox">
+                    <p>Rating: @review.Rating</p>
+                    <p>Comment: @review.Comment</p>
+                    <p>UserName: @review.ReviewerName</p>
+                    <a href="/Review/Update/@review.Id">Update Review</a>
+                    <a href="/Review/Delete/@review.Id">Delete Review</a>
+                    <hr/>
+                </article>
+            }
+
+        </div>
+
+        <p><a href="/Review/CreateByMovieId/?movieId=@Model.Id">Add Review</a></p>
+
+
+    </body>
+</html>

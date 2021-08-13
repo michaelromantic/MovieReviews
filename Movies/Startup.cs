@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Movies.Models;
-
+using Movies.Repositories;
 
 namespace Movies
 {
@@ -26,7 +26,7 @@ namespace Movies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<BlogContext>();
+            services.AddDbContext<MovieContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
