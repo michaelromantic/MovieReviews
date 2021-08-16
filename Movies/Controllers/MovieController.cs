@@ -41,7 +41,7 @@ namespace Movies.Controllers
         {
             DropList();
 
-            return View(new Movie() {GenreId = id, ReleaseYear = DateTime.Now.ToString("dddd, MMMM dd yyyy hh:mm tt") });
+            return View(new Movie() {GenreId = id });
         }
 
         [HttpPost]
@@ -49,7 +49,6 @@ namespace Movies.Controllers
         {
             DropList();
 
-            model.ReleaseYear = DateTime.Now.ToString("dddd, MMMM dd yyyy hh:mm tt");
             movieRepo.Create(model);
             return RedirectToAction("Details", "Movie", new { id = model.Id });
         }
@@ -74,8 +73,6 @@ namespace Movies.Controllers
         public ActionResult Update(Movie model)
         {
             DropList();
-
-            model.ReleaseYear = DateTime.Now.ToString("dddd, MMMM dd yyyy hh:mm tt");
 
             movieRepo.Update(model);
             ViewBag.Result = "You have successfully updated this blog.";

@@ -42,7 +42,7 @@
                 @foreach (var Movie in Model)
                 {
                     <div id="movieBox">
-                        <h4>@Movie.Title</h4>
+                        <a id="movie" href="/Movie/Details/@Movie.Id"><h4>@Movie.Title</h4></a>
                         <a id="movie" href="/Movie/Details/@Movie.Id"><img src="@Movie.Image" height="550"/></a>
                     </div>
                 } 

@@ -33,7 +33,7 @@
 
         <div id="middlePage2">
             <article id="movieBox">
-                <img src="@Model.Image" width="450"/>
+                <img src="@Model.Image" width="450" />
                 <h3>@Model.Title</h3>
                 <p>Director: @Model.Director</p>
                 <p>Written By: @Model.Writer</p>
@@ -60,7 +60,7 @@
                         let p = document.getElementById('averageRating');
                         let newText = "Average Rating: " + average;
                         p.innerText = newText;
-                        }
+                    }
                     updateAverageRating();
                 </script>
 
@@ -68,6 +68,18 @@
                 <a href="/Movie/Delete/@Model.Id" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
             </article>
         </div>
+
+        <script>
+            const apiKey = "2d2bad1f5bef1bfd83f6731f7e787b08";
+            const movieName = "@Model.Title";
+            const movieYear = "@Model.ReleaseYear";
+            const url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&language=en-US&query=" + movieName + "&page=1&include_adult=falseyear=" + movieYear + "&primary_release_year=" + movieYear;
+
+            fetch(url).then(response => response.json()).then(data => {
+                console.log(data.results[0]);
+            })
+
+        </script>
 
         <br />
         <hr />
@@ -81,7 +93,7 @@
                     <p>UserName: @review.ReviewerName</p>
                     <a href="/Review/Update/@review.Id">Update Review</a>
                     <a href="/Review/Delete/@review.Id">Delete Review</a>
-                    <hr/>
+                    <hr />
                 </article>
             }
 
